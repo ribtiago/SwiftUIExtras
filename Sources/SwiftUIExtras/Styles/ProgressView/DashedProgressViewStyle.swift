@@ -13,7 +13,6 @@ public struct DashedProgressViewStyle: ProgressViewStyle {
                     lineCap: .round,
                     lineJoin: .round,
                     dash: [0.4, 15]))
-                .foregroundColor(.white)
             
             Circle()
                 .trim(from: 0, to: max(configuration.fractionCompleted ?? 0, 0.001))
