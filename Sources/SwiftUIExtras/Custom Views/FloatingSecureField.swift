@@ -13,6 +13,9 @@ public struct FloatingSecureField: View {
     
     @State private var showsPassword: Bool = false
     
+    private var placeholderColor: Color = Color(.placeholderText)
+    private var highlightedColor: Color = .accentColor
+    
     public init(_ title: String, text: Binding<String>) {
         self.title = title
         self._text = text
@@ -21,7 +24,7 @@ public struct FloatingSecureField: View {
     public var body: some View {
         ZStack(alignment: .leading) {
             Text(title)
-                .foregroundColor(self.text.isEmpty ? Color(.placeholderText) : .accentColor)
+                .foregroundColor(self.text.isEmpty ? self.placeholderColor : self.highlightedColor)
                 .offset(y: self.text.isEmpty ? 0 : -25)
                 .scaleEffect(self.text.isEmpty ? 1 : 0.75, anchor: .leading)
             HStack {
@@ -43,6 +46,21 @@ public struct FloatingSecureField: View {
         }
         .padding(.top, 15)
         .animation(.default, value: self.text.isEmpty)
+    }
+}
+
+extension FloatingSecureField {
+    
+    func placeholderColor(_ color: Color) -> FloatingTextField {
+        var view = self
+        view.placeholderColor = color
+        return view
+    }
+    
+    func highlightedColor(_ color: Color) -> FloatingTextField {
+        var view = self
+        view.highlightedColor = color
+        return view
     }
 }
 
