@@ -49,15 +49,15 @@ public struct FloatingSecureField: View {
     }
 }
 
-extension FloatingSecureField {
+public extension FloatingSecureField {
     
-    func placeholderColor(_ color: Color) -> FloatingTextField {
+    func placeholderColor(_ color: Color) -> FloatingSecureField {
         var view = self
         view.placeholderColor = color
         return view
     }
     
-    func highlightedColor(_ color: Color) -> FloatingTextField {
+    func highlightedColor(_ color: Color) -> FloatingSecureField {
         var view = self
         view.highlightedColor = color
         return view

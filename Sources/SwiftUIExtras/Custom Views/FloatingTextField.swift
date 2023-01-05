@@ -25,7 +25,7 @@ public struct FloatingTextField: View {
     }
 }
 
-extension FloatingTextField {
+public extension FloatingTextField {
     
     func placeholderColor(_ color: Color) -> FloatingTextField {
         var view = self
