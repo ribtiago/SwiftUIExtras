@@ -10,15 +10,17 @@ import SwiftUI
 public struct FloatingSecureField: View {
     let title: String
     @Binding var text: String
+    let canViewPassword: Bool
     
     @State private var showsPassword: Bool = false
     
     private var placeholderColor: Color = Color(.placeholderText)
     private var highlightedColor: Color = .accentColor
     
-    public init(_ title: String, text: Binding<String>) {
+    public init(_ title: String, text: Binding<String>, canViewPassword: Bool = true) {
         self.title = title
         self._text = text
+        self.canViewPassword = canViewPassword
     }
 
     public var body: some View {
@@ -28,18 +30,20 @@ public struct FloatingSecureField: View {
                 .offset(y: self.text.isEmpty ? 0 : -25)
                 .scaleEffect(self.text.isEmpty ? 1 : 0.75, anchor: .leading)
             HStack {
-                if self.showsPassword {
+                if self.showsPassword && self.canViewPassword {
                     TextField("", text: self.$text)
                 }
                 else {
                     SecureField("", text: self.$text)
                 }
-                Button {
-                    withAnimation {
-                        self.showsPassword.toggle()
+                if self.canViewPassword {
+                    Button {
+                        withAnimation {
+                            self.showsPassword.toggle()
+                        }
+                    } label: {
+                        Image(systemName: self.showsPassword ? "eye" : "eye.slash")
                     }
-                } label: {
-                    Image(systemName: self.showsPassword ? "eye" : "eye.slash")
                 }
             }
 
@@ -68,7 +72,7 @@ public extension FloatingSecureField {
 struct FloatingSecureField_Previews: PreviewProvider {
     
     static var previews: some View {
-        FloatingSecureField("Test", text: .constant("password"))
+        FloatingSecureField("Test", text: .constant("password"), canViewPassword: false)
     }
 }
 #endif
