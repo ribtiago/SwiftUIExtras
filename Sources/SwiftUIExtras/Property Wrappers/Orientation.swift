@@ -25,6 +25,7 @@ import Combine
             NotificationCenter.default
                 .publisher(for: UIDevice.orientationDidChangeNotification)
                 .map { _ in UIDevice.current.orientation }
+                .filter(\.isValidInterfaceOrientation)
                 .assign(to: &self.$orientation)
         }
     }
