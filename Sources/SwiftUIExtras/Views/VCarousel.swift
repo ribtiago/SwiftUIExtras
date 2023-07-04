@@ -12,12 +12,12 @@ public struct VCarousel<Item, Content>: View where Content: View {
     private let content: (_ item: Item) -> Content
     private let offset: CGFloat
     
-    @State private var focusedItem: Int {
+    @State private var focusedItem: Int = 0 {
         didSet {
             self.bindedItem = self.focusedItem
         }
     }
-    @State private var oldFocusedItem: Int
+    @State private var oldFocusedItem: Int = 0
     @Binding private var bindedItem: Int
     
     public init(_ items: [Item], selected: Binding<Int>? = nil, offset: CGFloat = 90, @ViewBuilder content: @escaping (_ item: Item) -> Content) {
