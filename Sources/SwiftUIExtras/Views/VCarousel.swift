@@ -22,7 +22,7 @@ public struct VCarousel<Item, Content>: View where Content: View {
     
     public init(_ items: [Item], selected: Binding<Int>? = nil, offset: CGFloat = 90, @ViewBuilder content: @escaping (_ item: Item) -> Content) {
         self.items = items
-        self.offset = offset / CGFloat(self.items.count)
+        self.offset = offset / CGFloat(items.count)
         self.content = content
         if let selected = selected {
             self._bindedItem = selected
@@ -30,9 +30,9 @@ public struct VCarousel<Item, Content>: View where Content: View {
             self.oldFocusedItem = selected.wrappedValue
         }
         else {
-            self._bindedItem = .constant(self.items.count - 1)
-            self.focusedItem = self.items.count - 1
-            self.oldFocusedItem = self.items.count - 1
+            self._bindedItem = .constant(items.count - 1)
+            self.focusedItem = items.count - 1
+            self.oldFocusedItem = items.count - 1
         }
     }
     
