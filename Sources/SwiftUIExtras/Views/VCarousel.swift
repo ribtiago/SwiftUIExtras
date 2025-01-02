@@ -12,7 +12,7 @@ public struct VCarousel<Item, Content>: View where Content: View {
     private let content: (_ item: Item) -> Content
     private let offset: CGFloat
     
-    @State private var focusedItem: Int = 0 {
+    @State private var focusedItem: Int {
         didSet {
             self.bindedItem = self.focusedItem
         }
@@ -24,6 +24,7 @@ public struct VCarousel<Item, Content>: View where Content: View {
         self.items = items
         self.offset = offset / CGFloat(items.count)
         self.content = content
+        
         if let selected = selected {
             self._bindedItem = selected
             self.focusedItem = selected.wrappedValue
