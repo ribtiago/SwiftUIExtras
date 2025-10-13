@@ -13,6 +13,8 @@ struct DismissSheetKey: EnvironmentKey {
 }
 
 public extension EnvironmentValues {
+    
+    @available(*, deprecated, renamed: "dismissSheetAction", message: "Use the `dismissSheetAction` environment variable instead.")
     var dismissSheet: Binding<Bool> {
         get {
             return self[DismissSheetKey.self]
@@ -21,4 +23,7 @@ public extension EnvironmentValues {
             self[DismissSheetKey.self] = newValue
         }
     }
+    
+    @available(iOS 15.0, *)
+    @Entry var dismissSheetAction: DismissAction = EnvironmentValues().dismiss
 }
