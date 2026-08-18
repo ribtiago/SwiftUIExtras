@@ -12,16 +12,20 @@ import Combine
 public struct IndeterminatedCircularProgressView: View {
     
     private struct Style: ProgressViewStyle {
+        
+        let backgroundLineOpacity: Double
+        let lineCap: CGLineCap
+        
         func makeBody(configuration: Configuration) -> some View {
             let fraction = configuration.fractionCompleted ?? 1
             Circle()
-                .stroke(.tint.opacity(0.3), lineWidth: 10)
+                .stroke(.tint.opacity(self.backgroundLineOpacity), lineWidth: 10)
                 .overlay {
                     Circle()
                         .trim(from: 0, to: fraction / 1.2 * (fraction < 0.5 ? fraction : 1 - fraction))
                         .stroke(.tint, style: StrokeStyle(
                             lineWidth: 10,
-                            lineCap: .round))
+                            lineCap: self.lineCap))
                         .rotationEffect(.degrees(-90 + 360 * fraction))
                         
                 }
@@ -32,11 +36,19 @@ public struct IndeterminatedCircularProgressView: View {
     @State private var progress: Double = 0
     @State private var timerCancellable: AnyCancellable?
     
-    public init() { }
+    let backgroundLineOpacity: Double
+    let lineCap: CGLineCap
+    
+    public init(backgroundLineOpacity: Double = 0.3, lineCap: CGLineCap = .round) {
+        self.backgroundLineOpacity = backgroundLineOpacity
+        self.lineCap = lineCap
+    }
     
     public var body: some View {
         ProgressView(value: self.progress)
-            .progressViewStyle(IndeterminatedCircularProgressView.Style())
+            .progressViewStyle(IndeterminatedCircularProgressView.Style(
+                backgroundLineOpacity: self.backgroundLineOpacity,
+                lineCap: self.lineCap))
             .onAppear {
                 self.timerCancellable = Timer.publish(every: 0.007, on: .main, in: .common)
                     .autoconnect()
